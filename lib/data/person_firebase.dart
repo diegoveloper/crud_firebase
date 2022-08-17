@@ -21,9 +21,9 @@ class PersonFirebase implements PersonRepository {
   }
 
   @override
-  Future<bool> addPerson(Person person) async {
-    await personRef.add(person);
-    return true;
+  Future<Person> addPerson(Person person) async {
+    final result = await personRef.add(person);
+    return person.copyWith(id: result.id);
   }
 
   @override
@@ -33,8 +33,20 @@ class PersonFirebase implements PersonRepository {
   }
 
   @override
-  Future<bool> updatePerson(Person person) async {
+  Future<Person> updatePerson(Person person) async {
     await personRef.doc(person.id).update(person.toJson());
-    return true;
+    return person;
+  }
+
+  @override
+  Stream<List<Person>> getPersonsStream() {
+    final result = personRef.snapshots().map(
+          (event) => event.docs
+              .map(
+                (e) => e.data(),
+              )
+              .toList(),
+        );
+    return result;
   }
 }

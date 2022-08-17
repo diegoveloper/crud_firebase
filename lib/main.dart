@@ -2,6 +2,7 @@ import 'package:crud_firebase/data/person_firebase.dart';
 import 'package:crud_firebase/data/person_local.dart';
 import 'package:crud_firebase/domain/repository/person_repository.dart';
 import 'package:crud_firebase/ui/features/non-realtime/list_screen.dart';
+import 'package:crud_firebase/ui/features/realtime/list_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -77,7 +78,17 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: const Text('no-realtime'),
             ),
-            MaterialButton(onPressed: () {}),
+            MaterialButton(
+              color: Colors.blue,
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => ListRealtimeScreen.init(),
+                  ),
+                );
+              },
+              child: const Text('realtime'),
+            ),
           ],
         ),
       ),

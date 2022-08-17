@@ -11,14 +11,11 @@ class AddProvider extends ChangeNotifier {
   final PersonRepository personRepository;
   final Person? person;
 
-  Future<Person> add(Person newPerson) async {
-    Person? result;
+  Future<void> add(Person newPerson) async {
     if (person != null) {
-      result = await personRepository
-          .updatePerson(newPerson.copyWith(id: person!.id));
+      await personRepository.updatePerson(newPerson.copyWith(id: person!.id));
     } else {
-      result = await personRepository.addPerson(newPerson);
+      await personRepository.addPerson(newPerson);
     }
-    return result;
   }
 }

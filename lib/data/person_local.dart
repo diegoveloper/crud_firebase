@@ -12,7 +12,7 @@ class PersonLocal implements PersonRepository {
   }
 
   @override
-  Future<bool> addPerson(Person person) {
+  Future<Person> addPerson(Person person) {
     // TODO: implement addPerson
     throw UnimplementedError();
   }
@@ -24,8 +24,14 @@ class PersonLocal implements PersonRepository {
   }
 
   @override
-  Future<bool> updatePerson(Person person) {
+  Future<Person> updatePerson(Person person) {
     // TODO: implement updatePerson
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<Person>> getPersonsStream() {
+    // TODO: implement getPersonsStream
     throw UnimplementedError();
   }
 }

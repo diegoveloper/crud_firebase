@@ -1,3 +1,4 @@
+import 'package:crud_firebase/domain/models/person.dart';
 import 'package:crud_firebase/domain/repository/person_repository.dart';
 import 'package:crud_firebase/ui/features/non-realtime/add_screen.dart';
 import 'package:crud_firebase/ui/features/non-realtime/list_provider.dart';
@@ -36,12 +37,14 @@ class _ListNoRealtimeScreenState extends State<ListNoRealtimeScreen> {
                 final person = persons[index];
                 return ListTile(
                   onTap: () async {
-                    await Navigator.of(context).push(
+                    final result = await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) => AddScreen.init(person: person),
                       ),
                     );
-                    if (mounted) context.read<ListNoRealtimeProvider>().load();
+                    if (result != null && mounted) {
+                      context.read<ListNoRealtimeProvider>().update(result);
+                    }
                   },
                   onLongPress: () {
                     context.read<ListNoRealtimeProvider>().delete(person.id!);
@@ -54,12 +57,14 @@ class _ListNoRealtimeScreenState extends State<ListNoRealtimeScreen> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {
-          await Navigator.of(context).push(
+          final result = await Navigator.of(context).push<Person?>(
             MaterialPageRoute(
               builder: (_) => AddScreen.init(),
             ),
           );
-          if (mounted) context.read<ListNoRealtimeProvider>().load();
+          if (result != null && mounted) {
+            context.read<ListNoRealtimeProvider>().add(result);
+          }
         },
       ),
     );

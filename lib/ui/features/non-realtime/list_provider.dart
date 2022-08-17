@@ -9,6 +9,19 @@ class ListNoRealtimeProvider extends ChangeNotifier {
 
   List<Person>? persons;
 
+  void update(Person person) {
+    final index = persons?.indexWhere((e) => e.id == person.id);
+    if (index != null && index >= 0) {
+      persons?[index] = person;
+      notifyListeners();
+    }
+  }
+
+  void add(Person person) {
+    persons?.add(person);
+    notifyListeners();
+  }
+
   Future<void> load() async {
     persons = await personRepository.getPersons();
     notifyListeners();
@@ -16,6 +29,8 @@ class ListNoRealtimeProvider extends ChangeNotifier {
 
   Future<void> delete(String docId) async {
     await personRepository.deletePerson(docId);
-    load();
+    //load();
+    persons?.removeWhere((element) => element.id == docId);
+    notifyListeners();
   }
 }

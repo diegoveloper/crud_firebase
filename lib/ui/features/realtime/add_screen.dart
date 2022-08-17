@@ -1,7 +1,6 @@
 import 'package:crud_firebase/domain/models/person.dart';
 import 'package:crud_firebase/domain/repository/person_repository.dart';
-import 'package:crud_firebase/ui/features/non-realtime/add_provider.dart';
-import 'package:crud_firebase/ui/features/non-realtime/list_provider.dart';
+import 'package:crud_firebase/ui/features/realtime/add_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -78,8 +77,8 @@ class _AddScreenState extends State<AddScreen> {
             lastname: _controllerLastname.text,
             gender: _controllerGender.text,
           );
-          final result = await context.read<AddProvider>().add(newPerson);
-          if (mounted) Navigator.of(context).pop(result);
+          await context.read<AddProvider>().add(newPerson);
+          if (mounted) Navigator.of(context).pop();
         },
       ),
     );
